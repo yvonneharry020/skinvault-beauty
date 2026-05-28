@@ -11,9 +11,9 @@ const GlassSphere = dynamic(() => import('@/components/GlassSphere/GlassSphere')
 gsap.registerPlugin(ScrollTrigger);
 
 const PILLARS = [
-  { title: 'PROTECT',  desc: "the skin's barrier from external aggressors" },
-  { title: 'RESTORE',  desc: 'cellular function and skin resilience' },
-  { title: 'MAINTAIN', desc: 'radiance and performance over time' },
+  { title: 'PROTECT',  desc: 'your skin with verified, authentic formulas only' },
+  { title: 'RESTORE',  desc: 'your confidence in skincare that actually works' },
+  { title: 'MAINTAIN', desc: 'a zero-fake standard — every brand, every bottle' },
 ];
 
 export default function PhilosophySection() {
@@ -44,12 +44,13 @@ export default function PhilosophySection() {
       <div className={styles.textSide}>
         <span className={styles.eyebrow}>our philosophy</span>
         <h2 className={styles.heading}>
-          Beauty rooted in<br />
-          <em>performance science</em>
+          Skincare backed by<br />
+          <em>real ingredients</em>
         </h2>
         <p className={styles.body}>
-          Every SkinVault formula is designed as a precision tool — not a trend.
-          We engineer actives that work with your biology, not against it.
+          Every product in The Vault is chosen with one question:
+          does the science back it? No fillers, no fakes, no compromises.
+          Just ingredients that work — from brands you can trust.
         </p>
 
         <div ref={pillarsRef} className={styles.pillars}>

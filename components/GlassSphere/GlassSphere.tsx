@@ -8,18 +8,19 @@ interface GlassSphereProps {
   className?: string;
   color1?: string;
   color2?: string;
+  initialAlpha?: number;
   onReady?: (sphere: SphereRenderer) => void;
 }
 
-export default function GlassSphere({ id, className, color1, color2, onReady }: GlassSphereProps) {
-  const canvasRef   = useRef<HTMLCanvasElement>(null);
-  const rendererRef = useRef<SphereRenderer | null>(null);
+export default function GlassSphere({ id, className, color1, color2, initialAlpha, onReady }: GlassSphereProps) {
+  const canvasRef    = useRef<HTMLCanvasElement>(null);
+  const rendererRef  = useRef<SphereRenderer | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!rendererRef.current || !containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
+    const cx = rect.left + rect.width  / 2;
     const cy = rect.top  + rect.height / 2;
     const dx = (e.clientX - cx) / (rect.width  / 2);
     const dy = (e.clientY - cy) / (rect.height / 2);
@@ -40,7 +41,7 @@ export default function GlassSphere({ id, className, color1, color2, onReady }: 
 
     let sphere: SphereRenderer | null = null;
     try {
-      sphere = new SphereRenderer(canvas, { color1, color2 });
+      sphere = new SphereRenderer(canvas, { color1, color2, initialAlpha });
       rendererRef.current = sphere;
       sphere.start();
       onReady?.(sphere);
@@ -62,7 +63,7 @@ export default function GlassSphere({ id, className, color1, color2, onReady }: 
       ro.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [color1, color2, onReady, handleMouseMove]);
+  }, [color1, color2, initialAlpha, onReady, handleMouseMove]);
 
   return (
     <div ref={containerRef} className={className} style={{ position: 'relative' }}>
