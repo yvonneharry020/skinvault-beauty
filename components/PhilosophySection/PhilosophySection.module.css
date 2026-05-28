@@ -80,11 +80,29 @@
 
 .sphereWrap {
   position: relative;
-  height: 70vh;
-  min-height: 500px;
+  height: 56vh;
+  min-height: 380px;
+}
+
+/* Soft ambient glow that bleeds behind the sphere — depth cue */
+.sphereWrap::before {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 55% 48%,
+    oklch(88% 0.05 320 / 0.32) 0%,
+    oklch(86% 0.04 265 / 0.14) 42%,
+    transparent 68%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
 .sphere {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
 }

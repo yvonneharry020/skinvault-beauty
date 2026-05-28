@@ -55,8 +55,9 @@
 }
 
 .sphere {
-  width: 100%;
-  height: 90%;
+  width: 80%;
+  height: 68%;
+  margin: auto;
 }
 
 /* Steps list */
