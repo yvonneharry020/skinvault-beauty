@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useCart } from '@/contexts/CartContext';
+import { cloudinaryUrl, cloudinaryLarge } from '@/lib/cloudinary';
 import styles from './product.module.css';
 
 const formatNaira = (n: number) => `₦${n.toLocaleString('en-NG')}`;
@@ -80,12 +81,13 @@ export default function ProductDetail({ product, related }: Props) {
           <div className={styles.mainImgWrap}>
             {primaryImg ? (
               <Image
-                src={images[activeImg]?.url ?? primaryImg.url}
+                src={cloudinaryLarge(images[activeImg]?.url ?? primaryImg.url)}
                 alt={images[activeImg]?.alt ?? product.name}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className={styles.mainImg}
                 priority
+                unoptimized
               />
             ) : (
               <div className={styles.imgPlaceholder} />
@@ -102,7 +104,7 @@ export default function ProductDetail({ product, related }: Props) {
                   className={`${styles.thumb} ${activeImg === i ? styles.thumbActive : ''}`}
                   onClick={() => setActiveImg(i)}
                 >
-                  <Image src={img.url} alt={img.alt || product.name} fill sizes="80px" style={{ objectFit: 'cover' }} />
+                  <Image src={cloudinaryUrl(img.url, 200)} alt={img.alt || product.name} fill sizes="80px" style={{ objectFit: 'cover' }} unoptimized />
                 </button>
               ))}
             </div>
@@ -231,7 +233,7 @@ export default function ProductDetail({ product, related }: Props) {
                 <Link key={p.id} href={`/products/${p.slug}`} className={styles.relatedCard}>
                   <div className={styles.relatedImgWrap}>
                     {img ? (
-                      <Image src={img.url} alt={img.alt || p.name} fill sizes="25vw" style={{ objectFit: 'cover' }} />
+                      <Image src={cloudinaryUrl(img.url, 400)} alt={img.alt || p.name} fill sizes="25vw" style={{ objectFit: 'cover' }} unoptimized />
                     ) : (
                       <div className={styles.imgPlaceholder} />
                     )}

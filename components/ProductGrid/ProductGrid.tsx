@@ -1,7 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
+import { cloudinaryThumb } from '@/lib/cloudinary';
 import styles from './ProductGrid.module.css';
+
+interface ProductImage {
+  url: string;
+  alt: string;
+  is_primary: boolean;
+}
 
 interface Product {
   id: string;
@@ -10,7 +17,7 @@ interface Product {
   price: number;
   tag: string | null;
   description: string | null;
-  images: { url: string; alt: string; is_primary: boolean }[];
+  images: ProductImage[];
   is_featured: boolean;
 }
 
@@ -53,21 +60,24 @@ export default async function ProductGrid({ limit, title = 'The Collection' }: P
     <section className={styles.section}>
       <div className={styles.header}>
         <h2 className={styles.title}>{title}</h2>
-        <Link href="/shop" className={styles.viewAll}>VIEW ALL</Link>
+        <Link href="/shop" className={styles.viewAll}>VIEW ALL ({limit ? '63' : products.length})</Link>
       </div>
       <div className={styles.grid}>
         {products.map(product => {
           const primaryImg = product.images?.find(i => i.is_primary) || product.images?.[0];
+          const imgUrl = cloudinaryThumb(primaryImg?.url);
+
           return (
             <Link key={product.id} href={`/products/${product.slug}`} className={styles.card}>
               <div className={styles.imageWrap}>
-                {primaryImg ? (
+                {imgUrl ? (
                   <Image
-                    src={primaryImg.url}
-                    alt={primaryImg.alt || product.name}
+                    src={imgUrl}
+                    alt={primaryImg?.alt || product.name}
                     fill
                     sizes="(max-width: 768px) 50vw, 25vw"
                     className={styles.productImage}
+                    unoptimized
                   />
                 ) : (
                   <div className={styles.imagePlaceholder} />

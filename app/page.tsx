@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <ProductGrid limit={4} title="The Collection" />
+      <ProductGrid limit={8} title="The Collection" />
       <PhilosophySection />
       <StepsSection />
     </>

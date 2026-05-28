@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
+import { cloudinaryUrl } from '@/lib/cloudinary';
 import styles from './cart.module.css';
 
 const formatNaira = (n: number) => `₦${n.toLocaleString('en-NG')}`;
@@ -43,7 +44,7 @@ export default function CartPage() {
                 <div className={styles.product}>
                   <div className={styles.imgWrap}>
                     {item.image ? (
-                      <Image src={item.image} alt={item.name} fill sizes="90px" style={{ objectFit: 'cover' }} />
+                      <Image src={cloudinaryUrl(item.image, 200)} alt={item.name} fill sizes="90px" style={{ objectFit: 'cover' }} unoptimized />
                     ) : (
                       <div className={styles.imgPlaceholder} />
                     )}

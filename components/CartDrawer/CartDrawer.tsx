@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
+import { cloudinaryUrl } from '@/lib/cloudinary';
 import styles from './CartDrawer.module.css';
 
 export default function CartDrawer() {
@@ -35,7 +36,7 @@ export default function CartDrawer() {
                 <div key={item.id} className={styles.item}>
                   <div className={styles.itemImg}>
                     {item.image ? (
-                      <Image src={item.image} alt={item.name} fill sizes="80px" style={{ objectFit: 'cover' }} />
+                      <Image src={cloudinaryUrl(item.image, 200)} alt={item.name} fill sizes="80px" style={{ objectFit: 'cover' }} unoptimized />
                     ) : (
                       <div className={styles.imgPlaceholder} />
                     )}
