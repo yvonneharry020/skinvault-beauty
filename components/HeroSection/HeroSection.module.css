@@ -245,4 +245,19 @@
   .content  { padding: 7rem 1.5rem 4rem; }
   .stats    { gap: 1.2rem; }
   .stat strong { font-size: 1.4rem; }
+
+  /* On narrow screens the sphere fills the full viewport and makes text
+     unreadable — hide it and use a solid cream background instead */
+  .bgSphere { display: none; }
+  .overlay  {
+    background: rgba(250, 247, 243, 0.96);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats { flex-wrap: wrap; justify-content: center; gap: 1rem 2rem; }
+  .statDivider { display: none; }
+  .scrollHint { display: none; }
+  .actions { flex-direction: column; align-items: center; gap: 0.8rem; }
+  .btnPrimary, .btnSecondary { width: 100%; text-align: center; }
 }

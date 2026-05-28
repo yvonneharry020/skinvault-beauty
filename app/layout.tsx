@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { CartProvider } from '@/contexts/CartContext';
 import Navigation from '@/components/Navigation/Navigation';
@@ -9,6 +9,11 @@ import CartDrawer from '@/components/CartDrawer/CartDrawer';
 export const metadata: Metadata = {
   title: 'SkinVault Beauty — 100% Authentic Skincare',
   description: '100% authentic skincare products from top brands. Delivered to your door in Nigeria.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
