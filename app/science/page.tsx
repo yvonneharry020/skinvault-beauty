@@ -93,8 +93,6 @@ export default function SciencePage() {
         <GlassSphere
           id="science-bubble-right"
           className={styles.heroSphere}
-          color1="#e8c5a8"
-          color2="#f0dece"
         />
       </section>
 
@@ -154,8 +152,6 @@ export default function SciencePage() {
         <GlassSphere
           id="science-pledge-bubble"
           className={styles.pdrnSphere}
-          color1="#c8d8b8"
-          color2="#e0ecd4"
         />
         <div className={styles.pdrnText}>
           <span className={styles.eyebrow}>The Vault Standard</span>

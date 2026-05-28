@@ -45,8 +45,6 @@ export default function FAQPage() {
         <GlassSphere
           id="faq-bubble-right"
           className={styles.sphere}
-          color1="#d4c0a8"
-          color2="#ecddd0"
         />
       </div>
     </div>
