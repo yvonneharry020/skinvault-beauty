@@ -1,0 +1,163 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 3rem;
+  padding-top: 7rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  max-width: 700px;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--color-dark);
+  margin: 0 0 1.8rem;
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+  animation: slideUp 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.line:nth-child(2) { animation-delay: 0.1s; }
+
+.lineAccent {
+  display: block;
+  overflow: hidden;
+  color: var(--color-accent);
+  animation: slideUp 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(105%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--color-mid);
+  letter-spacing: 0.04em;
+  margin: 0 0 2.5rem;
+  animation: fadeIn 1s ease 0.5s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.actions {
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  animation: fadeIn 1s ease 0.7s both;
+}
+
+.btnPrimary,
+.btnSecondary {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.9rem 2.2rem;
+  border: 1px solid currentColor;
+  display: inline-block;
+  line-height: 1;
+  transition: background 0.3s, color 0.3s;
+}
+
+.btnPrimary {
+  background: var(--color-dark);
+  color: var(--color-cream);
+  border-color: var(--color-dark);
+}
+
+.btnPrimary span,
+.btnSecondary span {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.btnPrimary span:last-child,
+.btnSecondary span:last-child {
+  position: absolute;
+  transform: translateY(100%);
+}
+
+.btnPrimary,
+.btnSecondary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btnPrimary:hover span:first-child,
+.btnSecondary:hover span:first-child {
+  transform: translateY(-100%);
+}
+
+.btnPrimary:hover span:last-child,
+.btnSecondary:hover span:last-child {
+  transform: translateY(0%);
+}
+
+.btnSecondary {
+  color: var(--color-dark);
+  background: transparent;
+}
+
+.btnSecondary:hover {
+  background: var(--color-dark);
+  color: var(--color-cream);
+}
+
+.scrollHint {
+  position: absolute;
+  bottom: 2rem;
+  left: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--color-mid);
+  animation: fadeIn 1.2s ease 1s both;
+}
+
+.scrollLine {
+  width: 40px;
+  height: 1px;
+  background: var(--color-mid);
+  animation: scrollPulse 2s ease infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { width: 40px; }
+  50%       { width: 60px; }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 0 1.5rem;
+    padding-top: 6rem;
+  }
+
+  .scrollHint {
+    left: 1.5rem;
+  }
+}

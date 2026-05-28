@@ -1,0 +1,37 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  background: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeOut 0.6s ease 1.4s forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; pointer-events: none; }
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.brand {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 5rem);
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  color: var(--color-dark);
+  animation: brandReveal 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.3s both;
+}
+
+@keyframes brandReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

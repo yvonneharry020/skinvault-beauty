@@ -1,0 +1,138 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.4rem 3rem;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+.header.scrolled {
+  background: rgba(252, 248, 244, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.mainNav,
+.userNav {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.navLink,
+.cartBtn {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  gap: 0.5px;
+  overflow: hidden;
+}
+
+.letter {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.navLink:hover .letter,
+.cartBtn:hover .letter {
+  animation: letterUp 0.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.navLink:hover .letter:nth-child(1) { animation-delay: 0ms; }
+.navLink:hover .letter:nth-child(2) { animation-delay: 30ms; }
+.navLink:hover .letter:nth-child(3) { animation-delay: 60ms; }
+.navLink:hover .letter:nth-child(4) { animation-delay: 90ms; }
+.navLink:hover .letter:nth-child(5) { animation-delay: 120ms; }
+.navLink:hover .letter:nth-child(6) { animation-delay: 150ms; }
+.navLink:hover .letter:nth-child(7) { animation-delay: 180ms; }
+
+@keyframes letterUp {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-100%); }
+  41%  { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+
+.logo {
+  text-decoration: none;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: var(--color-dark);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: var(--color-dark);
+}
+
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  background: var(--color-cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  z-index: 999;
+}
+
+.mobileLink {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--color-dark);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .mainNav,
+  .userNav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}

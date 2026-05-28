@@ -1,0 +1,77 @@
+.page { padding-top: 8rem; }
+
+.hero {
+  padding: 5rem 3rem 6rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--color-dark);
+}
+
+.title em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 3rem 6rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.storyBlock {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 3rem;
+  padding: 3.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.num {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  padding-top: 0.3rem;
+}
+
+.storyTitle {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--color-dark);
+  margin-bottom: 1rem;
+}
+
+.storyText {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--color-mid);
+  font-weight: 300;
+  max-width: 580px;
+}
+
+@media (max-width: 768px) {
+  .hero,
+  .story {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .storyBlock {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

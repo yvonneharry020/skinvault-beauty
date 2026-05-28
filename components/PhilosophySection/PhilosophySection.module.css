@@ -1,0 +1,136 @@
+.section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 90vh;
+  padding: 5rem 3rem;
+  gap: 4rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.textSide {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-dark);
+  margin: 0;
+}
+
+.heading em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--color-mid);
+  font-weight: 300;
+  margin: 0;
+  max-width: 420px;
+}
+
+.pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-accent);
+}
+
+.pillarTitle {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-dark);
+}
+
+.pillarDesc {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-mid);
+  font-weight: 300;
+}
+
+.sphereWrap {
+  position: relative;
+  height: 70vh;
+  min-height: 500px;
+}
+
+.sphere {
+  width: 100%;
+  height: 100%;
+}
+
+.annotation {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.annotation[data-side='right'] {
+  right: -1rem;
+  top: 25%;
+  text-align: left;
+}
+
+.annotation[data-side='left'] {
+  left: 0;
+  bottom: 25%;
+  text-align: right;
+}
+
+.annotation strong {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-dark);
+}
+
+.annotation span {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--color-mid);
+  font-weight: 300;
+}
+
+@media (max-width: 900px) {
+  .section {
+    grid-template-columns: 1fr;
+    padding: 4rem 1.5rem;
+  }
+
+  .sphereWrap {
+    height: 50vw;
+    min-height: 280px;
+  }
+}

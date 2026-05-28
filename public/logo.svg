@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
+  <!-- S V mark — vault door shape -->
+  <g>
+    <!-- Vault circle / lock icon -->
+    <circle cx="34" cy="40" r="20" stroke="#1a2025" stroke-width="1.5" fill="none"/>
+    <circle cx="34" cy="40" r="12" stroke="#c8a882" stroke-width="1.5" fill="none"/>
+    <!-- Vault spokes -->
+    <line x1="34" y1="20" x2="34" y2="26" stroke="#1a2025" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="34" y1="54" x2="34" y2="60" stroke="#1a2025" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="40" x2="20" y2="40" stroke="#1a2025" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="48" y1="40" x2="54" y2="40" stroke="#1a2025" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Keyhole -->
+    <circle cx="34" cy="37" r="3" fill="#c8a882"/>
+    <rect x="32.5" y="38" width="3" height="5" rx="0.5" fill="#c8a882"/>
+    <!-- Handle bar -->
+    <rect x="52" y="38.5" width="5" height="3" rx="1.5" fill="#1a2025"/>
+  </g>
+
+  <!-- SKINVAULT wordmark -->
+  <text
+    x="70"
+    y="46"
+    font-family="'Cormorant Garamond', Georgia, serif"
+    font-size="22"
+    font-weight="600"
+    letter-spacing="6"
+    fill="#1a2025"
+  >SKINVAULT</text>
+
+  <!-- Thin accent line under BEAUTY -->
+  <text
+    x="72"
+    y="60"
+    font-family="'Cormorant Garamond', Georgia, serif"
+    font-size="9"
+    font-weight="400"
+    letter-spacing="8"
+    fill="#c8a882"
+  >BEAUTY</text>
+</svg>

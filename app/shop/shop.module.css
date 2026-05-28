@@ -1,0 +1,28 @@
+.page { padding-top: 7rem; }
+
+.hero {
+  padding: 4rem 3rem 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 400;
+  color: var(--color-dark);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-mid);
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 3rem 1.5rem 1rem; }
+}
