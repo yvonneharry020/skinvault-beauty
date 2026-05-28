@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { useCart } from '@/contexts/CartContext';
 import styles from './Navigation.module.css';
 
 const NAV_LINKS = [
@@ -14,6 +15,7 @@ const NAV_LINKS = [
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { count, setOpen } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -47,10 +49,11 @@ export default function Navigation() {
               <span key={i} className={styles.letter}>{ch}</span>
             ))}
           </Link>
-          <button className={styles.cartBtn} aria-label="Open cart">
+          <button className={styles.cartBtn} onClick={() => setOpen(true)} aria-label="Open cart">
             {'CART'.split('').map((ch, i) => (
               <span key={i} className={styles.letter}>{ch}</span>
             ))}
+            {count > 0 && <span className={styles.cartCount}>{count}</span>}
           </button>
         </nav>
 
@@ -67,12 +70,16 @@ export default function Navigation() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className={styles.mobileMenu}>
+          <button className={styles.mobileClose} onClick={() => setMenuOpen(false)}>✕</button>
           {NAV_LINKS.map(({ label, href }) => (
             <Link key={href} href={href} className={styles.mobileLink} onClick={() => setMenuOpen(false)}>
               {label}
             </Link>
           ))}
           <Link href="/account" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Account</Link>
+          <button className={styles.mobileLinkBtn} onClick={() => { setMenuOpen(false); setOpen(true); }}>
+            Cart {count > 0 && `(${count})`}
+          </button>
         </div>
       )}
     </header>

@@ -1,0 +1,150 @@
+.page { padding-top: 8rem; min-height: 100vh; }
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  font-family: var(--font-body);
+  color: var(--color-mid);
+  font-size: 0.9rem;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem 6rem;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  color: var(--color-dark);
+  margin: 0 0 0.4rem;
+}
+
+.email {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--color-mid);
+  margin: 0;
+}
+
+.signOutBtn {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-dark);
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.signOutBtn:hover { background: var(--color-dark); color: var(--color-cream); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.card {
+  background: var(--color-soft);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--color-dark);
+  margin: 0;
+}
+
+.cardSub {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-mid);
+  font-weight: 300;
+  margin: 0 0 1rem;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;
+}
+
+.emptyState p {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--color-mid);
+}
+
+.cardAction {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-dark);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  align-self: flex-start;
+}
+
+.cardAction:hover { color: var(--color-accent); }
+
+.profileDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.profileRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-dark);
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.profileLabel {
+  color: var(--color-mid);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .inner { padding: 0 1.5rem 5rem; }
+  .header { flex-direction: column; gap: 1.5rem; }
+  .grid { grid-template-columns: 1fr; }
+}
