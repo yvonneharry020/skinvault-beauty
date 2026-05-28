@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import dynamic from 'next/dynamic';
-import { SphereRenderer } from '@/lib/SphereRenderer';
 import styles from './StepsSection.module.css';
 
 const GlassSphere = dynamic(() => import('@/components/GlassSphere/GlassSphere'), { ssr: false });
@@ -46,8 +45,6 @@ const STEPS = [
 
 export default function StepsSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const stickyRef  = useRef<HTMLDivElement>(null);
-  const sphereRef  = useRef<SphereRenderer | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -55,21 +52,7 @@ export default function StepsSection() {
 
     const stepEls = section.querySelectorAll<HTMLElement>('[data-step]');
 
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: true,
-      onUpdate(self) {
-        if (!sphereRef.current) return;
-        const p = self.progress;
-        const y = Math.sin(p * Math.PI) * 0.3;
-        const sc = 0.9 + p * 0.2;
-        sphereRef.current.setState({ y, scale: sc, travel: p });
-      },
-    });
-
-    stepEls.forEach((el, i) => {
+    stepEls.forEach(el => {
       gsap.fromTo(el,
         { x: 60, opacity: 0 },
         {
@@ -98,15 +81,9 @@ export default function StepsSection() {
       </div>
 
       <div className={styles.layout}>
-        {/* Sticky sphere */}
-        <div className={styles.sticky} ref={stickyRef}>
-          <GlassSphere
-            id="sphere-canvas-2"
-            className={styles.sphere}
-            color1="#c8a882"
-            color2="#d4c4b0"
-            onReady={s => { sphereRef.current = s; }}
-          />
+        {/* Sticky water bubbles */}
+        <div className={styles.sticky}>
+          <GlassSphere className={styles.sphere} />
         </div>
 
         {/* Scrolling steps */}

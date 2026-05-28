@@ -64,14 +64,8 @@ export default function PhilosophySection() {
       </div>
 
       <div className={styles.sphereWrap}>
-        <GlassSphere
-          id="sphere-canvas-1"
-          className={styles.sphere}
-          color1="#c8a882"
-          color2="#e8d5c4"
-        />
+        <GlassSphere className={styles.sphere} />
 
-        {/* SVG annotation lines — like beautyinstem */}
         <div className={styles.annotation} data-side="right">
           <strong>VAULT-GRADE</strong>
           <span>actives concentration</span>
