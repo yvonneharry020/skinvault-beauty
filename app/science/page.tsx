@@ -12,56 +12,56 @@ const ACTIVES = [
     role: 'Brightening & Pore Refinement',
     brands: 'The Ordinary · Garnier · Anua · TIAM',
     detail:
-      'Stabilised at 5–10%, niacinamide blocks the transfer of melanin pigment to skin cells — visibly reducing dark spots, post-acne marks, and hyperpigmentation. Simultaneously, it regulates sebum and tightens pore appearance within 4–8 weeks of consistent use.',
+      'Stabilised at 5–10%, niacinamide blocks the transfer of melanin pigment to skin cells  visibly reducing dark spots, post-acne marks, and hyperpigmentation. Simultaneously, it regulates sebum and tightens pore appearance within 4–8 weeks of consistent use.',
   },
   {
     name: 'Ceramides',
     role: 'Barrier Reconstruction',
     brands: 'CeraVe · Isntree · Hada Labo',
     detail:
-      'Ceramides are lipid molecules that make up over 50% of the skin\'s natural barrier. When depleted — by harsh cleansers, over-exfoliation, or environmental stress — skin loses moisture and becomes reactive. Products delivering ceramide fractions 1, 3, and 6-II replenish this barrier, restoring protective function clinically within 7 days.',
+      'Ceramides are lipid molecules that make up over 50% of the skin\'s natural barrier. When depleted  by harsh cleansers, over-exfoliation, or environmental stress skin loses moisture and becomes reactive. Products delivering ceramide fractions 1, 3, and 6-II replenish this barrier, restoring protective function clinically within 7 days.',
   },
   {
     name: 'Hyaluronic Acid',
     role: 'Multi-depth Hydration',
     brands: 'Hada Labo · Timeless · Simple · Good Molecules',
     detail:
-      'A single gram of hyaluronic acid holds up to 6 litres of water. Multi-weight HA — combining high, medium, and low molecular weight variants — hydrates across every layer of the epidermis simultaneously. The result is visibly plumped, smoother skin, with improved resilience and reduced fine-line visibility.',
+      'A single gram of hyaluronic acid holds up to 6 litres of water. Multi-weight HA combining high, medium, and low molecular weight variants  hydrates across every layer of the epidermis simultaneously. The result is visibly plumped, smoother skin, with improved resilience and reduced fine-line visibility.',
   },
   {
     name: 'Alpha-Arbutin & Tranexamic Acid',
     role: 'Targeted Dark Spot Correction',
     brands: 'The Ordinary · Axis-Y · Balance Active Formula',
     detail:
-      'Alpha-arbutin inhibits tyrosinase — the enzyme responsible for melanin production — at a cellular level. Tranexamic acid works by disrupting the keratinocyte–melanocyte signalling pathway that triggers excess pigmentation after UV exposure or inflammation. Used consistently, both actives deliver visible fading without irritation.',
+      'Alpha-arbutin inhibits tyrosinase the enzyme responsible for melanin production at a cellular level. Tranexamic acid works by disrupting the keratinocyte–melanocyte signalling pathway that triggers excess pigmentation after UV exposure or inflammation. Used consistently, both actives deliver visible fading without irritation.',
   },
   {
     name: 'Centella Asiatica (CICA)',
     role: 'Soothing & Skin Repair',
     brands: 'Anua · I\'M From · Isntree · Dr Teal\'s',
     detail:
-      'Centella asiatica is one of the most studied botanicals in dermatology. Its key compounds — asiaticoside, madecassoside, and asiatic acid — stimulate collagen synthesis while suppressing inflammatory cytokines. This makes it clinically effective for redness, acne-prone skin, and post-procedure recovery.',
+      'Centella asiatica is one of the most studied botanicals in dermatology. Its key compounds asiaticoside, madecassoside, and asiatic acid stimulate collagen synthesis while suppressing inflammatory cytokines. This makes it clinically effective for redness, acne-prone skin, and post-procedure recovery.',
   },
   {
     name: 'AHA & BHA (Exfoliating Acids)',
     role: 'Cell Turnover & Clarity',
     brands: 'PanOxyl · The Ordinary · Axis-Y · Good Molecules',
     detail:
-      'Alpha-hydroxy acids (glycolic, lactic) work on the skin\'s surface, dissolving the bonds between dead skin cells for brighter, smoother texture. Beta-hydroxy acid (salicylic acid) is oil-soluble and penetrates the pore lining directly — making it the gold-standard active for acne and congestion. Never use both on the same evening without building tolerance first.',
+      'Alpha-hydroxy acids (glycolic, lactic) work on the skin\'s surface, dissolving the bonds between dead skin cells for brighter, smoother texture. Beta-hydroxy acid (salicylic acid) is oil-soluble and penetrates the pore lining directly making it the gold-standard active for acne and congestion. Never use both on the same evening without building tolerance first.',
   },
   {
     name: 'Fermented Rice & Skin Brighteners',
     role: 'Glow & Evenness',
     brands: 'Beauty of Joseon · Hatomugi · Kojie San · Kojivit',
     detail:
-      'Fermented rice filtrate is rich in ferulic acid, gamma-aminobutyric acid, and naturally-occurring kojic acid — all of which brighten skin tone and improve luminosity over time. Hatomugi (Job\'s Tears) extract is a centuries-old Japanese botanical packed with coix lacryma-jobi oil, shown to improve overall skin texture and moisture retention.',
+      'Fermented rice filtrate is rich in ferulic acid, gamma-aminobutyric acid, and naturally-occurring kojic acid all of which brighten skin tone and improve luminosity over time. Hatomugi (Job\'s Tears) extract is a centuries-old Japanese botanical packed with coix lacryma-jobi oil, shown to improve overall skin texture and moisture retention.',
   },
   {
     name: 'Sunscreen Filters (SPF)',
     role: 'Your Most Important Step',
     brands: 'Skin Aqua · Beauty of Joseon · Nivea · Garnier',
     detail:
-      'No brightening serum, no acid, no retinol works properly without SPF. UV radiation — even on cloudy days — is the primary driver of hyperpigmentation, premature aging, and barrier damage. Broad-spectrum SPF 50+ applied every morning is not optional skincare; it is the single highest-return habit you can build.',
+      'No brightening serum, no acid, no retinol works properly without SPF. UV radiation even on cloudy days is the primary driver of hyperpigmentation, premature aging, and barrier damage. Broad-spectrum SPF 50+ applied every morning is not optional skincare; it is the single highest-return habit you can build.',
   },
 ];
 
@@ -86,7 +86,7 @@ export default function SciencePage() {
             Know exactly what<br /><em>you&apos;re putting on your skin</em>
           </h1>
           <p className={styles.heroSub}>
-            SkinVault stocks 34 globally trusted brands — K-beauty, European, and US formulas.
+            SkinVault stocks 34 globally trusted brands K-beauty, European, and US formulas.
             Every product earns its place because of what&apos;s inside it, not what&apos;s on the label.
           </p>
         </div>
@@ -128,7 +128,7 @@ export default function SciencePage() {
             </h2>
             <p className={styles.pdrnBody}>
               Every product in The Vault is tagged by skin concern so you can build a routine
-              around what your skin actually needs — not what an algorithm recommends.
+              around what your skin actually needs not what an algorithm recommends.
               Browse all 63 products filtered by concern, brand, or skin type.
             </p>
             <Link href="/shop" className={styles.concernCta}>

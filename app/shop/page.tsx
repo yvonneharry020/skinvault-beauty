@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import ShopClient from './ShopClient';
 
-export const metadata = { title: 'Shop — SkinVault Beauty' };
+export const metadata = { title: 'Shop SkinVault Beauty' };
 
 async function getAllProducts() {
   const supabase = createClient(
