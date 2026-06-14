@@ -1,0 +1,84 @@
+/* ── Product grid loading skeleton ──────────────────────────────────── */
+.skeletonSection {
+  padding: 5rem 3rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.skeletonHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.skeletonTitle {
+  width: 200px;
+  height: 2rem;
+  background: var(--color-soft);
+  border-radius: 4px;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.skeletonViewAll {
+  width: 100px;
+  height: 1rem;
+  background: var(--color-soft);
+  border-radius: 4px;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem 1.8rem;
+}
+
+.skeletonCard {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(26, 32, 37, 0.06);
+}
+
+.skeletonImg {
+  aspect-ratio: 3/4;
+  background: var(--color-soft);
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.skeletonBody {
+  padding: 0.9rem 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeletonLine {
+  height: 0.9rem;
+  background: var(--color-soft);
+  border-radius: 4px;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.skeletonLineShort {
+  height: 0.75rem;
+  width: 60%;
+  background: var(--color-soft);
+  border-radius: 4px;
+  animation: shimmer 1.6s ease-in-out infinite 0.2s;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+@media (max-width: 1100px) {
+  .skeletonGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .skeletonSection { padding: 3rem 1.5rem; }
+  .skeletonGrid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem 1rem; }
+}

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
 import { cloudinaryThumb } from '@/lib/cloudinary';
 import WishlistBtn from './WishlistBtn';
+import AddToCartBtn from './AddToCartBtn';
 import styles from './ProductGrid.module.css';
 
 interface ProductImage {
@@ -86,18 +87,29 @@ export default async function ProductGrid({ limit, title = 'The Collection' }: P
                   )}
                   {product.tag && <span className={styles.tag}>{product.tag}</span>}
                   <div className={styles.hoverOverlay}>
-                    <span className={styles.selectBtn}>SELECT</span>
+                    <span className={styles.selectBtn}>VIEW PRODUCT</span>
                   </div>
                 </Link>
                 <WishlistBtn productName={product.name} />
               </div>
-              <Link href={`/products/${product.slug}`} className={styles.cardBody}>
-                <h3 className={styles.productName}>{product.name}</h3>
-                <p className={styles.productDesc}>
-                  {product.description?.split('.')[0] || ''}
-                </p>
-                <span className={styles.price}>{formatNaira(product.price)}</span>
-              </Link>
+              <div className={styles.cardBody}>
+                <Link href={`/products/${product.slug}`} className={styles.cardBodyLink}>
+                  <h3 className={styles.productName}>{product.name}</h3>
+                  <p className={styles.productDesc}>
+                    {product.description?.split('.')[0] || ''}
+                  </p>
+                </Link>
+                <div className={styles.cardFooter}>
+                  <span className={styles.price}>{formatNaira(product.price)}</span>
+                  <AddToCartBtn
+                    id={product.id}
+                    slug={product.slug}
+                    name={product.name}
+                    price={product.price}
+                    image={primaryImg?.url || ''}
+                  />
+                </div>
+              </div>
             </div>
           );
         })}

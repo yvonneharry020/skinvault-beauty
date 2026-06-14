@@ -2,18 +2,28 @@
 
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import HeroMarquee from '@/components/HeroMarquee/HeroMarquee';
 import styles from './HeroSection.module.css';
 
-const GlassSphere = dynamic(() => import('@/components/GlassSphere/GlassSphere'), { ssr: false });
+const LiquidChrome = dynamic(() => import('@/components/LiquidChrome/LiquidChrome'), { ssr: false });
 
 export default function HeroSection() {
   return (
     <section className={styles.hero}>
 
-      {/* ── Decorative 3D glass sphere — right-side backdrop ────────── */}
-      <GlassSphere className={styles.bgSphere} initialAlpha={1} />
+      {/* ── LiquidChrome WebGL background ───────────────────────────── */}
+      <div className={styles.liquidBg}>
+        <LiquidChrome
+          baseColor={[0.78, 0.66, 0.51]}
+          speed={0.3}
+          amplitude={0.4}
+          frequencyX={2.5}
+          frequencyY={1.5}
+          interactive={true}
+        />
+      </div>
 
-      {/* ── Soft gradient overlay — keeps text legible ─────────────── */}
+      {/* ── Soft overlay — keeps text legible over the animation ────── */}
       <div className={styles.overlay} />
 
       {/* ── Content ─────────────────────────────────────────────────── */}
@@ -52,11 +62,9 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ── Scroll hint ─────────────────────────────────────────────── */}
-      <div className={styles.scrollHint}>
-        <span>SCROLL DOWN</span>
-        <div className={styles.scrollLine} />
-      </div>
+      {/* ── Scrolling marquee strips ─────────────────────────────────── */}
+      <HeroMarquee />
+
     </section>
   );
 }

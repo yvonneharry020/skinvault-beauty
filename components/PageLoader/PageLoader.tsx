@@ -1,18 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
-import type { SphereRenderer } from '@/lib/SphereRenderer';
+import { useEffect, useState } from 'react';
+import Iridescence from '@/components/Iridescence/Iridescence';
 import styles from './PageLoader.module.css';
 
-const GlassSphere = dynamic(() => import('@/components/GlassSphere/GlassSphere'), { ssr: false });
+// #E8DFCA (--color-cream, slightly darker eggshell) normalised to 0–1 RGB
+const CREAM_COLOR: [number, number, number] = [0.910, 0.875, 0.792];
 
 export default function PageLoader() {
   const [visible, setVisible] = useState(true);
-  const sphereRef = useRef<SphereRenderer | null>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 2200);
+    const timer = setTimeout(() => setVisible(false), 8000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,14 +19,15 @@ export default function PageLoader() {
 
   return (
     <div className={styles.loader}>
-      <GlassSphere
-        className={styles.bubbles}
-        initialAlpha={0}
-        onReady={(sphere) => {
-          sphereRef.current = sphere;
-          sphere.setState({ alpha: 1 });
-        }}
-      />
+      <div className={styles.background}>
+        <Iridescence
+          color={CREAM_COLOR}
+          speed={1.4}
+          amplitude={0.15}
+          mouseReact={true}
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
       <div className={styles.brand}>SKINVAULT</div>
     </div>
   );

@@ -39,7 +39,7 @@ export default function Navigation() {
 
         {/* Logo */}
         <Link href="/" className={styles.logo}>
-          <Image src="/logo.svg" alt="SkinVault Beauty" width={200} height={50} priority />
+          <Image src="/logo.svg" alt="SkinVault Beauty" width={200} height={50} priority style={{ height: 'auto' }} />
         </Link>
 
         {/* Right nav */}

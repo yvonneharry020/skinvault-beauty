@@ -8,9 +8,9 @@
   --color-dark:    #1a2025;
   --color-mid:     #5a6472;
   --color-accent:  #c8a882;
-  --color-cream:   #faf7f3;
-  --color-soft:    #f0ebe3;
-  --color-border:  #e0d8ce;
+  --color-cream:   #E8DFCA;
+  --color-soft:    #DDD6BF;
+  --color-border:  #CEC7B2;
 
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body:    'DM Sans', Inter, sans-serif;
@@ -40,7 +40,6 @@ body {
 img {
   display: block;
   max-width: 100%;
-  height: auto;
 }
 
 a { color: inherit; }

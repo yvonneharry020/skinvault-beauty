@@ -1,0 +1,100 @@
+.wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+/* ── Strip 1 — taglines, dark background, scrolls left ─────────────── */
+.strip1 {
+  background: rgba(26, 32, 37, 0.82);
+  backdrop-filter: blur(6px);
+  padding: 0.7rem 0;
+  overflow: hidden;
+}
+
+/* ── Strip 2 — brands, accent background, scrolls right ────────────── */
+.strip2 {
+  background: rgba(200, 168, 130, 0.80);
+  backdrop-filter: blur(6px);
+  padding: 0.55rem 0;
+  overflow: hidden;
+}
+
+/* ── Tracks ─────────────────────────────────────────────────────────── */
+.track {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+  animation: scrollLeft 35s linear infinite;
+}
+
+.trackReverse {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+  animation: scrollRight 28s linear infinite;
+}
+
+@keyframes scrollLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* ── Items ──────────────────────────────────────────────────────────── */
+.item {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #f5f0e8;
+  padding: 0 2rem;
+}
+
+.brandItem {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--color-dark);
+  padding: 0 1.8rem;
+  font-style: italic;
+}
+
+.sep {
+  opacity: 0.45;
+  margin-left: 2rem;
+  font-size: 0.45rem;
+  line-height: 1;
+}
+
+.sepBrand {
+  opacity: 0.5;
+  margin-left: 1.8rem;
+  font-size: 0.55rem;
+}
+
+/* ── Pause on hover ─────────────────────────────────────────────────── */
+.strip1:hover .track { animation-play-state: paused; }
+.strip2:hover .trackReverse { animation-play-state: paused; }
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .wrapper { bottom: 2.5rem; }
+  .item { font-size: 0.58rem; padding: 0 1.4rem; }
+  .brandItem { font-size: 0.72rem; padding: 0 1.2rem; }
+}

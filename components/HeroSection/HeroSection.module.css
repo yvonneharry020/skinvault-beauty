@@ -9,48 +9,30 @@
   background: var(--color-cream);
 }
 
-/* ── 3D glass sphere — right of hero, behind text ── */
-.bgSphere {
+/* ── LiquidChrome WebGL canvas — fills entire hero ─────────────────── */
+.liquidBg {
   position: absolute;
-  right: 2%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(280px, 46vh, 56vh);
-  height: clamp(280px, 46vh, 56vh);
+  inset: 0;
   z-index: 0;
-  pointer-events: none;
 }
 
-/* Vivid iridescent halo behind the sphere */
-.bgSphere::before {
-  content: '';
-  position: absolute;
-  inset: -18%;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 80, 200, 0.18) 0%,
-    rgba(80, 200, 255, 0.14) 35%,
-    rgba(200, 100, 255, 0.08) 60%,
-    transparent 75%
-  );
-  z-index: -1;
-  pointer-events: none;
-  filter: blur(12px);
+.liquidBg canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 
-/* ── Soft overlay — protects text on left, opens up right for sphere ── */
+/* ── Overlay — softens the animation so text stays crisp ───────────── */
 .overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   background: linear-gradient(
-    to right,
-    rgba(250, 247, 243, 0.90) 0%,
-    rgba(250, 247, 243, 0.78) 30%,
-    rgba(250, 247, 243, 0.40) 55%,
-    rgba(250, 247, 243, 0.10) 72%,
-    rgba(250, 247, 243, 0.00) 88%
+    135deg,
+    rgba(232, 223, 202, 0.72) 0%,
+    rgba(232, 223, 202, 0.50) 40%,
+    rgba(232, 223, 202, 0.28) 70%,
+    rgba(232, 223, 202, 0.10) 100%
   );
 }
 
@@ -209,36 +191,6 @@
   background: var(--color-border);
 }
 
-/* ── Scroll hint ────────────────────────────────────────────────────── */
-.scrollHint {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  color: var(--color-mid);
-  animation: fadeIn 1.2s ease 1.2s both;
-}
-
-.scrollLine {
-  width: 40px;
-  height: 1px;
-  background: var(--color-mid);
-  animation: scrollPulse 2s ease infinite;
-}
-
-@keyframes scrollPulse {
-  0%, 100% { width: 40px; opacity: 1; }
-  50%       { width: 60px; opacity: 0.5; }
-}
-
 /* ── Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 680px) {
   .headline { font-size: clamp(2.4rem, 10vw, 3.5rem); }
@@ -246,18 +198,14 @@
   .stats    { gap: 1.2rem; }
   .stat strong { font-size: 1.4rem; }
 
-  /* On narrow screens the sphere fills the full viewport and makes text
-     unreadable — hide it and use a solid cream background instead */
-  .bgSphere { display: none; }
-  .overlay  {
-    background: rgba(250, 247, 243, 0.96);
+  .overlay {
+    background: rgba(232, 223, 202, 0.80);
   }
 }
 
 @media (max-width: 480px) {
   .stats { flex-wrap: wrap; justify-content: center; gap: 1rem 2rem; }
   .statDivider { display: none; }
-  .scrollHint { display: none; }
   .actions { flex-direction: column; align-items: center; gap: 0.8rem; }
   .btnPrimary, .btnSecondary { width: 100%; text-align: center; }
 }
