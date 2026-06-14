@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
 import { cloudinaryThumb } from '@/lib/cloudinary';
+import WishlistBtn from './WishlistBtn';
 import styles from './ProductGrid.module.css';
 
 interface ProductImage {
@@ -68,33 +69,36 @@ export default async function ProductGrid({ limit, title = 'The Collection' }: P
           const imgUrl = cloudinaryThumb(primaryImg?.url);
 
           return (
-            <Link key={product.id} href={`/products/${product.slug}`} className={styles.card}>
+            <div key={product.id} className={styles.card}>
               <div className={styles.imageWrap}>
-                {imgUrl ? (
-                  <Image
-                    src={imgUrl}
-                    alt={primaryImg?.alt || product.name}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className={styles.productImage}
-                    unoptimized
-                  />
-                ) : (
-                  <div className={styles.imagePlaceholder} />
-                )}
-                {product.tag && <span className={styles.tag}>{product.tag}</span>}
-                <div className={styles.hoverOverlay}>
-                  <span className={styles.selectBtn}>SELECT</span>
-                </div>
+                <Link href={`/products/${product.slug}`} className={styles.imageLink}>
+                  {imgUrl ? (
+                    <Image
+                      src={imgUrl}
+                      alt={primaryImg?.alt || product.name}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className={styles.productImage}
+                      unoptimized
+                    />
+                  ) : (
+                    <div className={styles.imagePlaceholder} />
+                  )}
+                  {product.tag && <span className={styles.tag}>{product.tag}</span>}
+                  <div className={styles.hoverOverlay}>
+                    <span className={styles.selectBtn}>SELECT</span>
+                  </div>
+                </Link>
+                <WishlistBtn productName={product.name} />
               </div>
-              <div className={styles.cardBody}>
+              <Link href={`/products/${product.slug}`} className={styles.cardBody}>
                 <h3 className={styles.productName}>{product.name}</h3>
                 <p className={styles.productDesc}>
                   {product.description?.split('.')[0] || ''}
                 </p>
                 <span className={styles.price}>{formatNaira(product.price)}</span>
-              </div>
-            </Link>
+              </Link>
+            </div>
           );
         })}
       </div>

@@ -285,7 +285,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem 1.5rem;
+  gap: 2rem 1.8rem;
   padding-top: 2rem;
 }
 
@@ -293,12 +293,21 @@
 .card {
   display: flex;
   flex-direction: column;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(26, 32, 37, 0.08);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 10px 36px rgba(26, 32, 37, 0.14);
+  transform: translateY(-3px);
 }
 
 .cardImgLink {
   display: block;
   text-decoration: none;
-  margin-bottom: 1rem;
 }
 
 .imgWrap {
@@ -336,6 +345,36 @@
   z-index: 2;
 }
 
+/* Wishlist / love button */
+.wishlistBtn {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(26, 32, 37, 0.18);
+  z-index: 3;
+  backdrop-filter: blur(4px);
+  color: var(--color-mid);
+  transition: background 0.2s, transform 0.2s, color 0.2s;
+}
+
+.wishlistBtn:hover {
+  background: #ffffff;
+  transform: scale(1.12);
+}
+
+.wishlistBtnLiked {
+  color: #d4607a;
+}
+
 .quickView {
   position: absolute;
   bottom: 0;
@@ -366,6 +405,7 @@
   flex-direction: column;
   gap: 0.3rem;
   flex: 1;
+  padding: 0.9rem 1rem 1.1rem;
 }
 
 .brandName {
