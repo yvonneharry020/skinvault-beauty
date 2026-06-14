@@ -29,10 +29,10 @@
   z-index: 1;
   background: linear-gradient(
     135deg,
-    rgba(232, 223, 202, 0.72) 0%,
-    rgba(232, 223, 202, 0.50) 40%,
-    rgba(232, 223, 202, 0.28) 70%,
-    rgba(232, 223, 202, 0.10) 100%
+    rgba(232, 223, 202, 0.52) 0%,
+    rgba(232, 223, 202, 0.30) 40%,
+    rgba(232, 223, 202, 0.12) 70%,
+    rgba(232, 223, 202, 0.04) 100%
   );
 }
 
@@ -75,11 +75,13 @@
 .line {
   display: block;
   animation: slideUp 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.3s both;
+  text-shadow: 0 2px 24px rgba(232, 223, 202, 0.55);
 }
 
 .lineAccent {
   display: block;
-  color: var(--color-accent);
+  color: #f5efe3;
+  text-shadow: 0 2px 20px rgba(26, 32, 37, 0.25);
   animation: slideUp 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.45s both;
 }
 
@@ -199,7 +201,7 @@
   .stat strong { font-size: 1.4rem; }
 
   .overlay {
-    background: rgba(232, 223, 202, 0.80);
+    background: rgba(232, 223, 202, 0.45);
   }
 }
 

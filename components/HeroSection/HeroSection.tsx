@@ -14,9 +14,9 @@ export default function HeroSection() {
       {/* ── LiquidChrome WebGL background ───────────────────────────── */}
       <div className={styles.liquidBg}>
         <LiquidChrome
-          baseColor={[0.78, 0.66, 0.51]}
-          speed={0.3}
-          amplitude={0.4}
+          baseColor={[0.62, 0.46, 0.24]}
+          speed={0.35}
+          amplitude={0.55}
           frequencyX={2.5}
           frequencyY={1.5}
           interactive={true}

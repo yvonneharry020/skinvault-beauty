@@ -7,6 +7,7 @@ import { useCart } from '@/contexts/CartContext';
 import styles from './Navigation.module.css';
 
 const NAV_LINKS = [
+  { label: 'Home', href: '/' },
   { label: 'Science', href: '/science' },
   { label: 'Us', href: '/about' },
   { label: 'Shop', href: '/shop' },
