@@ -7,6 +7,8 @@
   display: flex;
   flex-direction: column;
   pointer-events: none;
+  overflow: hidden;
+  width: 100%;
 }
 
 /* ── Strip 1 — taglines, dark background, scrolls left ─────────────── */

@@ -244,7 +244,7 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 3rem 1.5rem;
+    padding: 3rem 1.2rem;
   }
 
   .grid {
@@ -255,6 +255,37 @@
 
 @media (max-width: 480px) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 0.7rem;
+  }
+
+  .cardBody {
+    padding: 0.6rem 0.65rem 0.8rem;
+  }
+
+  .productName {
+    font-size: 0.78rem;
+  }
+
+  .productDesc {
+    display: none;
+  }
+
+  .price {
+    font-size: 0.78rem;
+  }
+
+  .cardFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    margin-top: 0.4rem;
+  }
+
+  .addBtn {
+    width: 100%;
+    text-align: center;
+    font-size: 0.55rem;
+    padding: 0.38rem 0.4rem;
   }
 }
