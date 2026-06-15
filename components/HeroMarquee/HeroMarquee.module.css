@@ -96,7 +96,7 @@
 
 /* ── Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 680px) {
-  .wrapper { bottom: 2.5rem; }
+  .wrapper { bottom: 0; }
   .item { font-size: 0.58rem; padding: 0 1.4rem; }
   .brandItem { font-size: 0.72rem; padding: 0 1.2rem; }
 }
