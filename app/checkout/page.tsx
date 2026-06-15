@@ -223,32 +223,42 @@ export default function CheckoutPage() {
         .from('profiles')
         .select('full_name, email, phone')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       setEmail(user.email ?? profile?.email ?? '');
       if (profile?.full_name) setFullName(profile.full_name);
       if (profile?.phone) setPhone(profile.phone);
 
-      // Fetch default address
-      const { data: addrs } = await supabase
+      // Fetch default address, fall back to any address
+      let { data: addrData } = await supabase
         .from('addresses')
         .select('label, line1, line2, city, state')
         .eq('user_id', user.id)
         .eq('is_default', true)
-        .single();
+        .maybeSingle();
 
-      if (addrs) {
-        setSavedAddr(addrs);
-        // Pre-fill in case user switches to custom
-        setLine1(addrs.line1);
-        setLine2(addrs.line2 ?? '');
-        setCity(addrs.city);
-        if (addrs.state) {
-          setState(addrs.state);
-          setZone(addrs.state === 'Lagos' ? 'lagos' : 'outside');
+      if (!addrData) {
+        const { data: anyAddr } = await supabase
+          .from('addresses')
+          .select('label, line1, line2, city, state')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        addrData = anyAddr;
+      }
+
+      if (addrData) {
+        setSavedAddr(addrData);
+        setLine1(addrData.line1);
+        setLine2(addrData.line2 ?? '');
+        setCity(addrData.city);
+        if (addrData.state) {
+          setState(addrData.state);
+          setZone(addrData.state === 'Lagos' ? 'lagos' : 'outside');
         }
       } else {
-        // No saved address — show form immediately
+        // Member has no saved addresses — show blank form
         setUseCustomAddr(true);
       }
 
@@ -394,7 +404,8 @@ export default function CheckoutPage() {
     );
   }
 
-  const showAddrForm = useCustomAddr || !savedAddr || authStatus === 'guest';
+  // During loading, never reveal the form (it would flash before the saved address loads)
+  const showAddrForm = authStatus !== 'loading' && (useCustomAddr || !savedAddr || authStatus === 'guest');
 
   return (
     <div className={styles.page}>
@@ -481,6 +492,14 @@ export default function CheckoutPage() {
                   <span className={styles.autofillBadge}>Saved address</span>
                 )}
               </div>
+
+              {/* Loading skeleton while auth resolves */}
+              {authStatus === 'loading' && (
+                <div className={styles.addrSkeleton}>
+                  <div className={styles.addrSkeletonLine} />
+                  <div className={styles.addrSkeletonLine} style={{ width: '60%' }} />
+                </div>
+              )}
 
               {/* Saved address card (member with address, not overriding) */}
               {authStatus === 'member' && savedAddr && !useCustomAddr && (

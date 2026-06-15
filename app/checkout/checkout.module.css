@@ -737,3 +737,28 @@
 }
 
 .fieldDisabled .fieldLine { display: none; }
+
+/* ── Address loading skeleton ── */
+.addrSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.1rem 1.25rem;
+  background: rgba(200, 168, 130, 0.05);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-border);
+}
+
+.addrSkeletonLine {
+  height: 12px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(200,168,130,0.12) 25%, rgba(200,168,130,0.22) 50%, rgba(200,168,130,0.12) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 2px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
