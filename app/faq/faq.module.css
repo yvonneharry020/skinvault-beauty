@@ -1,4 +1,4 @@
-.page { padding-top: 8rem; min-height: 100vh; }
+.page { padding-top: 8rem; min-height: 100vh; background: var(--color-cream); }
 
 .layout {
   display: grid;
@@ -8,6 +8,16 @@
   margin: 0 auto;
   padding: 0 3rem 6rem;
   align-items: start;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 0.75rem;
 }
 
 .title {
@@ -68,7 +78,7 @@
 }
 
 .item.active .answer {
-  max-height: 200px;
+  max-height: 400px;
 }
 
 .answer p {
@@ -79,6 +89,23 @@
   font-weight: 300;
   padding-bottom: 1.5rem;
 }
+
+.stillNeedHelp {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-mid);
+  margin: 2.5rem 0 0;
+}
+
+.helpLink {
+  color: var(--color-dark);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.helpLink:hover { color: var(--color-accent); }
 
 /* Sphere — floats off the right edge like beautyinstem */
 .sphere {
