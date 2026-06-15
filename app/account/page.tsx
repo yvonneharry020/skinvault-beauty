@@ -54,14 +54,11 @@ export default function AccountPage() {
 
         {/* Dashboard grid */}
         <div className={styles.grid}>
-          <div className={styles.card}>
+          <Link href="/account/orders" className={styles.card} style={{ textDecoration: 'none', display: 'block' }}>
             <h2 className={styles.cardTitle}>Orders</h2>
             <p className={styles.cardSub}>Track and manage your skincare orders</p>
-            <div className={styles.emptyState}>
-              <p>No orders yet.</p>
-              <Link href="/shop" className={styles.cardAction}>Start Shopping →</Link>
-            </div>
-          </div>
+            <span className={styles.cardAction}>View all orders →</span>
+          </Link>
 
           <div className={styles.card}>
             <h2 className={styles.cardTitle}>Wishlist</h2>

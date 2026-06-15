@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useCart } from '@/contexts/CartContext';
 import styles from './Navigation.module.css';
 
@@ -17,6 +18,9 @@ export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { count, setOpen } = useCart();
+  const pathname = usePathname();
+  const isAuthPage = pathname === '/account/login' || pathname === '/account/register';
+  const useLightNav = isAuthPage && !scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -24,15 +28,19 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const linkClass = [styles.navLink, useLightNav ? styles.navLinkLight : ''].filter(Boolean).join(' ');
+  const cartClass = [styles.cartBtn, useLightNav ? styles.navLinkLight : ''].filter(Boolean).join(' ');
+  const burgerClass = [styles.hamburger, useLightNav ? styles.hamburgerLight : ''].filter(Boolean).join(' ');
+
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.inner}>
         {/* Left nav */}
         <nav className={styles.mainNav}>
           {NAV_LINKS.map(({ label, href }) => (
-            <Link key={href} href={href} className={styles.navLink}>
+            <Link key={href} href={href} className={linkClass}>
               {label.split('').map((ch, i) => (
-                <span key={i} className={styles.letter}>{ch === ' ' ? ' ' : ch}</span>
+                <span key={i} className={styles.letter}>{ch === ' ' ? ' ' : ch}</span>
               ))}
             </Link>
           ))}
@@ -45,12 +53,12 @@ export default function Navigation() {
 
         {/* Right nav */}
         <nav className={styles.userNav}>
-          <Link href="/account" className={styles.navLink}>
+          <Link href="/account" className={linkClass}>
             {'ACCOUNT'.split('').map((ch, i) => (
               <span key={i} className={styles.letter}>{ch}</span>
             ))}
           </Link>
-          <button className={styles.cartBtn} onClick={() => setOpen(true)} aria-label="Open cart">
+          <button className={cartClass} onClick={() => setOpen(true)} aria-label="Open cart">
             {'CART'.split('').map((ch, i) => (
               <span key={i} className={styles.letter}>{ch}</span>
             ))}
@@ -60,7 +68,7 @@ export default function Navigation() {
 
         {/* Mobile hamburger */}
         <button
-          className={styles.hamburger}
+          className={burgerClass}
           onClick={() => setMenuOpen(v => !v)}
           aria-label="Toggle menu"
         >

@@ -44,6 +44,15 @@
   display: inline-flex;
   gap: 0.5px;
   overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.navLinkLight {
+  color: rgba(232, 223, 202, 0.85);
+}
+
+.hamburgerLight span {
+  background: rgba(232, 223, 202, 0.85) !important;
 }
 
 .letter {
