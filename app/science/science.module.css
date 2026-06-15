@@ -185,6 +185,16 @@
   gap: 1.25rem;
 }
 
+/* ── Tilt wrapper — provides perspective for each card's 3D tilt ── */
+.cardWrapper {
+  perspective: 500px;
+  position: relative;
+}
+
+.cardWrapper:hover {
+  z-index: 2;
+}
+
 /* ── Base card ── */
 .card {
   position: relative;
@@ -193,15 +203,14 @@
   flex-direction: column;
   gap: 0;
   overflow: hidden;
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
   cursor: default;
   border-radius: 2px;
+  will-change: transform;
+  transition: box-shadow 0.28s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(26, 32, 37, 0.18);
-  z-index: 1;
+  box-shadow: 0 24px 60px rgba(26, 32, 37, 0.22);
 }
 
 /* ── Card variants ── */

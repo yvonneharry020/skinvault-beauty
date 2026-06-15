@@ -1,8 +1,64 @@
 'use client';
 
+import { useRef } from 'react';
+import { motion, useMotionValue, useSpring } from 'motion/react';
 import Link from 'next/link';
 import styles from './science.module.css';
 
+/* ── TiltCard spring config — snappy, dramatic ── */
+const SPRING = { damping: 18, stiffness: 200, mass: 1 };
+const ROTATE_AMPLITUDE = 18;
+
+function TiltCard({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const rotateX = useSpring(useMotionValue(0), SPRING);
+  const rotateY = useSpring(useMotionValue(0), SPRING);
+  const scale = useSpring(1, SPRING);
+
+  function handleMouse(e: React.MouseEvent<HTMLDivElement>) {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left - rect.width / 2;
+    const offsetY = e.clientY - rect.top - rect.height / 2;
+    rotateX.set((offsetY / (rect.height / 2)) * -ROTATE_AMPLITUDE);
+    rotateY.set((offsetX / (rect.width / 2)) * ROTATE_AMPLITUDE);
+  }
+
+  function handleMouseEnter() {
+    scale.set(1.07);
+  }
+
+  function handleMouseLeave() {
+    scale.set(1);
+    rotateX.set(0);
+    rotateY.set(0);
+  }
+
+  return (
+    <div
+      ref={ref}
+      className={styles.cardWrapper}
+      onMouseMove={handleMouse}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <motion.article
+        className={className}
+        style={{ rotateX, rotateY, scale }}
+      >
+        {children}
+      </motion.article>
+    </div>
+  );
+}
+
+/* ── Data ── */
 const ACTIVES = [
   {
     name: 'Niacinamide (B3)',
@@ -129,10 +185,10 @@ export default function SciencePage() {
         </div>
       </div>
 
-      {/* ── Actives Grid ── */}
+      {/* ── Actives Grid — TiltCard animation on each card ── */}
       <section className={styles.grid}>
         {ACTIVES.map((ing, i) => (
-          <article
+          <TiltCard
             key={ing.name}
             className={[styles.card, styles[`card_${ing.variant}`]].join(' ')}
           >
@@ -155,7 +211,7 @@ export default function SciencePage() {
             </div>
 
             <div className={styles.cardGhostNum} aria-hidden="true">0{i + 1}</div>
-          </article>
+          </TiltCard>
         ))}
       </section>
 
@@ -181,7 +237,7 @@ export default function SciencePage() {
         </div>
 
         <div className={styles.bento}>
-          {SKIN_CONCERNS.map((c, i) => (
+          {SKIN_CONCERNS.map((c) => (
             <Link href="/shop" key={c.concern} className={[styles.tile, styles[c.bg]].join(' ')}>
               <span className={styles.tileConcern}>{c.concern}</span>
               <span className={styles.tileCount}>{c.count}</span>
