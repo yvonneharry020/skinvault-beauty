@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { label: 'Science', href: '/science' },
   { label: 'Us', href: '/about' },
   { label: 'Shop', href: '/shop' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export default function Navigation() {
@@ -85,6 +86,7 @@ export default function Navigation() {
               {label}
             </Link>
           ))}
+          <Link href="/contact" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Contact</Link>
           <Link href="/account" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Account</Link>
           <button className={styles.mobileLinkBtn} onClick={() => { setMenuOpen(false); setOpen(true); }}>
             Cart {count > 0 && `(${count})`}
