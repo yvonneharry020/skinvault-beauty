@@ -38,11 +38,9 @@ const NG_STATES = [
   'Taraba','Yobe','Zamfara',
 ];
 
-// ── Email regex ───────────────────────────────────
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[0-9+\s\-()]{7,15}$/;
 
-// ── Paystack inline type declaration ─────────────
 declare global {
   interface Window {
     PaystackPop: {
@@ -69,15 +67,16 @@ type FieldProps = {
   autoComplete?: string;
   required?: boolean;
   className?: string;
+  disabled?: boolean;
 };
 
-function FloatField({ label, type = 'text', value, onChange, autoComplete, required, className }: FieldProps) {
+function FloatField({ label, type = 'text', value, onChange, autoComplete, required, className, disabled }: FieldProps) {
   const [focused, setFocused] = useState(false);
   const id = useId();
   const floated = focused || value.length > 0;
 
   return (
-    <div className={[styles.field, focused ? styles.focused : '', className ?? ''].filter(Boolean).join(' ')}>
+    <div className={[styles.field, focused ? styles.focused : '', disabled ? styles.fieldDisabled : '', className ?? ''].filter(Boolean).join(' ')}>
       <label htmlFor={id} className={[styles.fieldLabel, floated ? styles.floated : ''].filter(Boolean).join(' ')}>
         {label}
       </label>
@@ -91,13 +90,13 @@ function FloatField({ label, type = 'text', value, onChange, autoComplete, requi
         className={styles.input}
         autoComplete={autoComplete}
         required={required}
+        disabled={disabled}
       />
       <span className={styles.fieldLine} aria-hidden="true" />
     </div>
   );
 }
 
-// ── Select field ──────────────────────────────────
 type SelectProps = {
   label: string;
   value: string;
@@ -105,15 +104,16 @@ type SelectProps = {
   options: string[];
   required?: boolean;
   className?: string;
+  disabled?: boolean;
 };
 
-function SelectField({ label, value, onChange, options, required, className }: SelectProps) {
+function SelectField({ label, value, onChange, options, required, className, disabled }: SelectProps) {
   const [focused, setFocused] = useState(false);
   const id = useId();
   const floated = focused || value.length > 0;
 
   return (
-    <div className={[styles.field, focused ? styles.focused : '', className ?? ''].filter(Boolean).join(' ')}>
+    <div className={[styles.field, focused ? styles.focused : '', disabled ? styles.fieldDisabled : '', className ?? ''].filter(Boolean).join(' ')}>
       <label htmlFor={id} className={[styles.fieldLabel, floated ? styles.floated : ''].filter(Boolean).join(' ')}>
         {label}
       </label>
@@ -125,6 +125,7 @@ function SelectField({ label, value, onChange, options, required, className }: S
         onBlur={() => setFocused(false)}
         className={styles.select}
         required={required}
+        disabled={disabled}
       >
         <option value="" />
         {options.map(o => <option key={o} value={o}>{o}</option>)}
@@ -134,11 +135,30 @@ function SelectField({ label, value, onChange, options, required, className }: S
   );
 }
 
-// ── Helpers ───────────────────────────────────────
 const formatNaira = (n: number) => `₦${n.toLocaleString('en-NG')}`;
 
 function generateRef() {
   return `SV-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+}
+
+// ── Saved address display ─────────────────────────
+interface SavedAddr { label: string; line1: string; line2: string | null; city: string; state: string | null; }
+
+function AddressCard({ addr, onEdit }: { addr: SavedAddr; onEdit: () => void }) {
+  return (
+    <div className={styles.savedAddrCard}>
+      <div className={styles.savedAddrLeft}>
+        <span className={styles.savedAddrLabel}>{addr.label}</span>
+        <p className={styles.savedAddrText}>
+          {addr.line1}{addr.line2 ? `, ${addr.line2}` : ''}<br />
+          {addr.city}{addr.state ? `, ${addr.state}` : ''}
+        </p>
+      </div>
+      <button type="button" className={styles.savedAddrChange} onClick={onEdit}>
+        Deliver elsewhere
+      </button>
+    </div>
+  );
 }
 
 // ═════════════════════════════════════════════════
@@ -147,6 +167,12 @@ function generateRef() {
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, total, clearCart } = useCart();
+
+  // ── Auth + profile state ──
+  type AuthStatus = 'loading' | 'guest' | 'member';
+  const [authStatus, setAuthStatus] = useState<AuthStatus>('loading');
+  const [savedAddr, setSavedAddr] = useState<SavedAddr | null>(null);
+  const [useCustomAddr, setUseCustomAddr] = useState(false);
 
   // ── Form state ──
   const [email, setEmail] = useState('');
@@ -165,24 +191,14 @@ export default function CheckoutPage() {
   const [orderId, setOrderId] = useState('');
   const [hydrated, setHydrated] = useState(false);
 
-  // Wait one tick for CartContext to load from localStorage before checking emptiness
   useEffect(() => { setHydrated(true); }, []);
 
-  // Redirect if cart is empty (only after hydration)
   useEffect(() => {
     if (!hydrated) return;
     if (items.length === 0 && !success) router.replace('/cart');
   }, [hydrated, items, success, router]);
 
-  // Pre-fill email from Supabase session
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user?.email) setEmail(user.email);
-    });
-  }, []);
-
-  // Load Paystack inline script once
+  // Load Paystack inline script
   useEffect(() => {
     if (document.getElementById('paystack-inline')) return;
     const script = document.createElement('script');
@@ -192,30 +208,80 @@ export default function CheckoutPage() {
     document.body.appendChild(script);
   }, []);
 
-  // Derived values
+  // Fetch auth + profile + default address
+  useEffect(() => {
+    const supabase = createClient();
+    (async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        setAuthStatus('guest');
+        return;
+      }
+
+      // Fetch profile
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name, email, phone')
+        .eq('id', user.id)
+        .single();
+
+      setEmail(user.email ?? profile?.email ?? '');
+      if (profile?.full_name) setFullName(profile.full_name);
+      if (profile?.phone) setPhone(profile.phone);
+
+      // Fetch default address
+      const { data: addrs } = await supabase
+        .from('addresses')
+        .select('label, line1, line2, city, state')
+        .eq('user_id', user.id)
+        .eq('is_default', true)
+        .single();
+
+      if (addrs) {
+        setSavedAddr(addrs);
+        // Pre-fill in case user switches to custom
+        setLine1(addrs.line1);
+        setLine2(addrs.line2 ?? '');
+        setCity(addrs.city);
+        if (addrs.state) {
+          setState(addrs.state);
+          setZone(addrs.state === 'Lagos' ? 'lagos' : 'outside');
+        }
+      } else {
+        // No saved address — show form immediately
+        setUseCustomAddr(true);
+      }
+
+      setAuthStatus('member');
+    })();
+  }, []);
+
   const selectedZone = ZONES.find(z => z.id === zone)!;
   const shipping = total >= 50000 ? 0 : selectedZone.fee;
   const grandTotal = total + shipping;
 
-  // ── Validate form ──
+  // Resolve which address values are being used for payment
+  const resolvedAddr = useCustomAddr || !savedAddr
+    ? { line1, line2, city, state: state }
+    : { line1: savedAddr.line1, line2: savedAddr.line2 ?? '', city: savedAddr.city, state: savedAddr.state ?? '' };
+
   function validate(): string | null {
     if (!EMAIL_RE.test(email.trim())) return 'Please enter a valid email address.';
     if (fullName.trim().length < 2) return 'Please enter your full name.';
     if (!PHONE_RE.test(phone.trim())) return 'Please enter a valid phone number.';
-    if (line1.trim().length < 5) return 'Please enter your street address.';
-    if (city.trim().length < 2) return 'Please enter your city or area.';
-    if (!state) return 'Please select your state.';
+    if (resolvedAddr.line1.trim().length < 5) return 'Please enter your street address.';
+    if (resolvedAddr.city.trim().length < 2) return 'Please enter your city or area.';
+    if (!resolvedAddr.state) return 'Please select your state.';
     return null;
   }
 
-  // ── Pay handler ──
   async function handlePay() {
     setError('');
     const validationError = validate();
     if (validationError) { setError(validationError); return; }
 
     if (!window.PaystackPop) {
-      setError('Payment system is loading — please try again in a moment.');
+      setError('Payment system is still loading — please wait a moment and try again.');
       return;
     }
 
@@ -223,71 +289,82 @@ export default function CheckoutPage() {
     const ref = generateRef();
     const paystackKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY ?? '';
 
-    const handler = window.PaystackPop.setup({
-      key: paystackKey,
-      email: email.trim(),
-      amount: grandTotal * 100,
-      currency: 'NGN',
-      ref,
-      metadata: {
-        custom_fields: [
-          { display_name: 'Delivery Name', variable_name: 'delivery_name', value: fullName },
-          { display_name: 'Delivery Address', variable_name: 'delivery_address', value: `${line1}, ${city}, ${state}` },
-        ],
-      },
-      callback: async (response) => {
-        const orderItems = items.map(i => ({
-          product_id: i.id,
-          product_name: i.name,
-          price: i.price,
-          quantity: i.quantity,
-          subtotal: i.price * i.quantity,
-        }));
+    if (!paystackKey) {
+      setError('Payment configuration error. Please contact support.');
+      setPaying(false);
+      return;
+    }
 
-        try {
-          const res = await fetch('/api/orders/create', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              paymentReference: response.reference,
-              items: orderItems,
-              subtotal: total,
-              shipping,
-              total: grandTotal,
-              deliveryAddress: {
-                fullName: fullName.trim(),
-                phone: phone.trim(),
-                line1: line1.trim(),
-                line2: line2.trim() || undefined,
-                city: city.trim(),
-                state,
-                country: 'NG',
-              },
-            }),
-          });
+    try {
+      const handler = window.PaystackPop.setup({
+        key: paystackKey,
+        email: email.trim(),
+        amount: grandTotal * 100,
+        currency: 'NGN',
+        ref,
+        metadata: {
+          custom_fields: [
+            { display_name: 'Delivery Name', variable_name: 'delivery_name', value: fullName },
+            { display_name: 'Delivery Address', variable_name: 'delivery_address', value: `${resolvedAddr.line1}, ${resolvedAddr.city}, ${resolvedAddr.state}` },
+          ],
+        },
+        callback: async (response) => {
+          const orderItems = items.map(i => ({
+            product_id: i.id,
+            product_name: i.name,
+            price: i.price,
+            quantity: i.quantity,
+            subtotal: i.price * i.quantity,
+          }));
 
-          const data = await res.json() as { orderId?: string; error?: string };
+          try {
+            const res = await fetch('/api/orders/create', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                paymentReference: response.reference,
+                items: orderItems,
+                subtotal: total,
+                shipping,
+                total: grandTotal,
+                deliveryAddress: {
+                  fullName: fullName.trim(),
+                  phone: phone.trim(),
+                  line1: resolvedAddr.line1.trim(),
+                  line2: resolvedAddr.line2.trim() || undefined,
+                  city: resolvedAddr.city.trim(),
+                  state: resolvedAddr.state,
+                  country: 'NG',
+                },
+              }),
+            });
 
-          if (!res.ok || !data.orderId) {
-            setError(data.error ?? 'Payment received but order could not be saved. Contact support with ref: ' + response.reference);
+            const data = await res.json() as { orderId?: string; error?: string };
+
+            if (!res.ok || !data.orderId) {
+              setError(data.error ?? 'Payment received but order could not be saved. Contact support with ref: ' + response.reference);
+              setPaying(false);
+              return;
+            }
+
+            clearCart();
+            setOrderId(data.orderId);
+            setSuccess(true);
+          } catch {
+            setError('Payment received but order save failed. Contact support with ref: ' + response.reference);
             setPaying(false);
-            return;
           }
-
-          clearCart();
-          setOrderId(data.orderId);
-          setSuccess(true);
-        } catch {
-          setError('Payment received but order save failed. Contact support with ref: ' + response.reference);
+        },
+        onClose: () => {
           setPaying(false);
-        }
-      },
-      onClose: () => {
-        setPaying(false);
-      },
-    });
+        },
+      });
 
-    handler.openIframe();
+      handler.openIframe();
+    } catch {
+      setError('Could not open payment window. Please try again or refresh the page.');
+      setPaying(false);
+    }
   }
 
   // ── Success screen ──
@@ -305,7 +382,7 @@ export default function CheckoutPage() {
           <h1 className={styles.successTitle}>Your vault is on its way.</h1>
           <p className={styles.successText}>
             Thank you for your order! A confirmation has been sent to <strong>{email}</strong>.
-            Your authentic skincare will be delivered to <strong>{city}, {state}</strong>{' '}
+            Your authentic skincare will be delivered to <strong>{resolvedAddr.city}, {resolvedAddr.state}</strong>{' '}
             within {selectedZone.days}.
           </p>
           <div className={styles.successActions}>
@@ -316,6 +393,8 @@ export default function CheckoutPage() {
       </div>
     );
   }
+
+  const showAddrForm = useCustomAddr || !savedAddr || authStatus === 'guest';
 
   return (
     <div className={styles.page}>
@@ -332,6 +411,22 @@ export default function CheckoutPage() {
           <h1 className={styles.title}>Checkout</h1>
         </div>
 
+        {/* Guest sign-in nudge */}
+        {authStatus === 'guest' && (
+          <div className={styles.guestBanner}>
+            <div className={styles.guestBannerLeft}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              <span>Have an account? Sign in to autofill your details and track your order.</span>
+            </div>
+            <Link href={`/account/login?redirect=/checkout`} className={styles.guestSignIn}>
+              Sign in
+            </Link>
+          </div>
+        )}
+
         <div className={styles.layout}>
           {/* ── Left: form ── */}
           <div className={styles.formCol}>
@@ -342,8 +437,39 @@ export default function CheckoutPage() {
               <div className={styles.sectionHead}>
                 <span className={styles.sectionNum}>1</span>
                 <span className={styles.sectionTitle}>Contact</span>
+                {authStatus === 'member' && (
+                  <span className={styles.autofillBadge}>Autofilled</span>
+                )}
               </div>
-              <FloatField label="Email address" type="email" value={email} onChange={setEmail} autoComplete="email" required />
+              <div className={styles.grid2}>
+                <FloatField
+                  label="Email address"
+                  type="email"
+                  value={email}
+                  onChange={setEmail}
+                  autoComplete="email"
+                  required
+                  className={styles.colSpan2}
+                  disabled={authStatus === 'member'}
+                />
+                <FloatField
+                  label="Full name"
+                  value={fullName}
+                  onChange={setFullName}
+                  autoComplete="name"
+                  required
+                  className={styles.colSpan2}
+                />
+                <FloatField
+                  label="Phone number"
+                  type="tel"
+                  value={phone}
+                  onChange={setPhone}
+                  autoComplete="tel"
+                  required
+                  className={styles.colSpan2}
+                />
+              </div>
             </div>
 
             {/* 2 — Delivery address */}
@@ -351,16 +477,47 @@ export default function CheckoutPage() {
               <div className={styles.sectionHead}>
                 <span className={styles.sectionNum}>2</span>
                 <span className={styles.sectionTitle}>Delivery address</span>
+                {authStatus === 'member' && savedAddr && !useCustomAddr && (
+                  <span className={styles.autofillBadge}>Saved address</span>
+                )}
               </div>
 
-              <div className={styles.grid2}>
-                <FloatField label="Full name" value={fullName} onChange={setFullName} autoComplete="name" required className={styles.colSpan2} />
-                <FloatField label="Phone number" type="tel" value={phone} onChange={setPhone} autoComplete="tel" required className={styles.colSpan2} />
-                <FloatField label="Street address" value={line1} onChange={setLine1} autoComplete="address-line1" required className={styles.colSpan2} />
-                <FloatField label="Apartment / Estate (optional)" value={line2} onChange={setLine2} autoComplete="address-line2" />
-                <FloatField label="City / Area" value={city} onChange={setCity} autoComplete="address-level2" required />
-                <SelectField label="State" value={state} onChange={v => { setState(v); if (v !== 'Lagos') setZone('outside'); else setZone('lagos'); }} options={NG_STATES} required />
-              </div>
+              {/* Saved address card (member with address, not overriding) */}
+              {authStatus === 'member' && savedAddr && !useCustomAddr && (
+                <AddressCard addr={savedAddr} onEdit={() => setUseCustomAddr(true)} />
+              )}
+
+              {/* Address form (guest, or no saved address, or delivering elsewhere) */}
+              {showAddrForm && (
+                <>
+                  {useCustomAddr && savedAddr && (
+                    <button
+                      type="button"
+                      className={styles.backToSaved}
+                      onClick={() => {
+                        setUseCustomAddr(false);
+                        setState(savedAddr.state ?? '');
+                        setZone(savedAddr.state === 'Lagos' ? 'lagos' : 'outside');
+                      }}
+                    >
+                      ← Use my saved address instead
+                    </button>
+                  )}
+                  <div className={styles.grid2}>
+                    <FloatField label="Street address" value={line1} onChange={setLine1} autoComplete="address-line1" required className={styles.colSpan2} />
+                    <FloatField label="Apartment / Estate (optional)" value={line2} onChange={setLine2} autoComplete="address-line2" />
+                    <FloatField label="City / Area" value={city} onChange={setCity} autoComplete="address-level2" required />
+                    <SelectField
+                      label="State"
+                      value={state}
+                      onChange={v => { setState(v); setZone(v === 'Lagos' ? 'lagos' : 'outside'); }}
+                      options={NG_STATES}
+                      required
+                      className={styles.colSpan2}
+                    />
+                  </div>
+                </>
+              )}
             </div>
 
             {/* 3 — Delivery zone */}
@@ -437,7 +594,7 @@ export default function CheckoutPage() {
               <span className={styles.grandValue}>{formatNaira(grandTotal)}</span>
             </div>
 
-            <button className={styles.payBtn} onClick={handlePay} disabled={paying}>
+            <button className={styles.payBtn} onClick={handlePay} disabled={paying || authStatus === 'loading'}>
               {paying && <span className={styles.spinner} />}
               {paying ? 'Processing…' : `Pay ${formatNaira(grandTotal)}`}
             </button>

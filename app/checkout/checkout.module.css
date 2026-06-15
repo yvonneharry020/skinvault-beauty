@@ -606,3 +606,134 @@
   .colSpan2 { grid-column: span 1; }
   .title { font-size: 1.9rem; }
 }
+
+/* ── Guest banner ── */
+.guestBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: rgba(200,168,130,0.08);
+  border: 1px solid rgba(200,168,130,0.25);
+  padding: 0.9rem 1.25rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.guestBannerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--color-dark);
+}
+
+.guestSignIn {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+/* ── Autofill badge ── */
+.autofillBadge {
+  margin-left: auto;
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5a9e72;
+  background: rgba(90,158,114,0.1);
+  padding: 0.2rem 0.6rem;
+}
+
+/* ── Saved address card ── */
+.savedAddrCard {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: rgba(200,168,130,0.06);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  padding: 1.1rem 1.25rem;
+}
+
+.savedAddrLeft { flex: 1; }
+
+.savedAddrLabel {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: var(--color-dark);
+  color: var(--color-cream);
+  padding: 0.2rem 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.savedAddrText {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--color-dark);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.savedAddrChange {
+  background: none;
+  border: 1px solid var(--color-border);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-mid);
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.savedAddrChange:hover { border-color: var(--color-dark); color: var(--color-dark); }
+
+/* ── Back to saved address ── */
+.backToSaved {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-mid);
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1.25rem;
+  transition: color 0.18s;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.backToSaved:hover { color: var(--color-dark); }
+
+/* ── Disabled field ── */
+.fieldDisabled .input,
+.fieldDisabled .select {
+  color: var(--color-mid);
+  cursor: default;
+}
+
+.fieldDisabled .fieldLine { display: none; }
