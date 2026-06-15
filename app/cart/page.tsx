@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/contexts/CartContext';
 import { cloudinaryUrl } from '@/lib/cloudinary';
 import styles from './cart.module.css';
@@ -9,6 +10,7 @@ import styles from './cart.module.css';
 const formatNaira = (n: number) => `₦${n.toLocaleString('en-NG')}`;
 
 export default function CartPage() {
+  const router = useRouter();
   const { items, total, removeItem, updateQty, clearCart } = useCart();
 
   if (items.length === 0) {
@@ -93,7 +95,7 @@ export default function CartPage() {
               <span>{formatNaira(grandTotal)}</span>
             </div>
 
-            <button className={styles.checkoutBtn}>
+            <button className={styles.checkoutBtn} onClick={() => router.push('/checkout')}>
               PROCEED TO CHECKOUT
             </button>
             <p className={styles.payNote}>Secure checkout powered by Paystack</p>
