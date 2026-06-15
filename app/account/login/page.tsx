@@ -217,7 +217,7 @@ export default function LoginPage() {
             />
 
             <div className={styles.forgotRow}>
-              <button type="button" className={styles.forgotLink}>Forgot password?</button>
+              <Link href="/account/forgot-password" className={styles.forgotLink}>Forgot password?</Link>
             </div>
 
             {error && <p className={styles.error} role="alert">{error}</p>}

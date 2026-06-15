@@ -90,7 +90,13 @@ export default async function ProductGrid({ limit, title = 'The Collection' }: P
                     <span className={styles.selectBtn}>VIEW PRODUCT</span>
                   </div>
                 </Link>
-                <WishlistBtn productName={product.name} />
+                <WishlistBtn
+                  productId={product.id}
+                  productSlug={product.slug}
+                  productName={product.name}
+                  productPrice={product.price}
+                  productImage={primaryImg?.url || ''}
+                />
               </div>
               <div className={styles.cardBody}>
                 <Link href={`/products/${product.slug}`} className={styles.cardBodyLink}>
